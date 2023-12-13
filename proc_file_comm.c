@@ -12,19 +12,21 @@ int proc_file_commands(char *file_path, int *exe_ret);
 
 int cant_open(char *file_path)
 {
-	char *error, *hist_str;		//Create memory loc for both
+	char *error, *hist_str;		
+	/*Create memory loc for both*/
 	int len;
 
-	hist_str = _itoa(hist);		//to convert integer to string
+	hist_str = _itoa(hist);		
+	/*to convert integer to string*/
 	
 	if (!hist_str)
 	{
 		return(127);
 	}
-
+	
 	len = _str_len(name) + _strlen(hist_str) + _strlen(file_path) + 16;
 	error = malloc(sizeof(char) * (len + 1));
-	
+
 	if (!error)
 	{
 		free(hist_str);
@@ -51,8 +53,8 @@ int cant_open(char *file_path)
  * @exe_ret: Return value of the last executed comman
  *
  * Return: the last return value of last command.
- * 		-127 for file couldn't open
- * 		if malloc ails -1
+ *		127 for file couldn't open
+ *		if malloc ails -1
  */
 
 int proc_file_commands(char *file_path, int *exe_ret)
@@ -74,7 +76,8 @@ int proc_file_commands(char *file_path, int *exe_ret)
 		return (*exe_ret)
 	}
 
-	//Line automatically has size of 120
+	/*Line automatically has size of 120*/
+
 	line = malloc(sizeof(char) * old_size);
 
 	if (!line)
@@ -88,7 +91,9 @@ int proc_file_commands(char *file_path, int *exe_ret)
 		if (b_read == 0 && linesize == 0)
 			return (*exe_ret);
 
-		buffer[b_read] = '\0';	//Null terminate the buffer
+		buffer[b_read] = '\0';	
+		/*Null terminate the buffer*/
+
 		line_size += b_read;
 		line = _realloc(line, old_size, line_size);
 		_strcat(line, buffer);
@@ -96,7 +101,8 @@ int proc_file_commands(char *file_path, int *exe_ret)
 		old_size = line_size;
 
 	}
-	while (b_read);
+	while (b_read)
+	{}
 
 	for (i = 0; line[i] == '\n'; i++)
 		line[i] = ' ';
