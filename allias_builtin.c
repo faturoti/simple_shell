@@ -80,7 +80,7 @@ void set_alias(char *var_name, char *value)
 
 	for (j = 0, k = 0; value[j]; j++)
 	{
-		f (value[j] != '\'' && value[j] != '"')
+		f(value[j] != '\'' && value[j] != '"')
 			new_value[k++] = value[j];
 	}
 
@@ -154,7 +154,7 @@ char **replace_aliases(char **args)
 		{
 			if (_strcmp(args[i], temp->name) == 0)
 			{
-				new_value = malloc(sizeof(char) * (_strlen(temp->value) + 1));if (!new_value)
+				new_value = malloc(sizeof(char) * (_strlen(temp->value) + 1));
 
 				if (!new_value)
 				{

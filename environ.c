@@ -8,36 +8,42 @@
 
 char **_cpyenv(void)
 {
-	char **new_environ;	//pointer to a copy of environ
-	size_t size;		//size tracker
+	char **new_environ;	
+	/*pointer to a copy of environ*/
+	size_t size;		
+	/*size tracker*/
 	int index;
 
-	for(size = 0; environ[size]; size++)
+	for (size = 0; environ[size]; size++)
 		;
 
 	new_environ = malloc(sizeof(char *) * (size + 1));
 	if (!new_environ)
 		return (NULL);
 	
-	for(index = 0; environ[index]; index++)
+	for (index = 0; environ[index]; index++)
 	{
 		new_environ[index] = malloc(_strlen(environ[index]) + 1);  
-		//allocate space for string to be copied
+		/*allocate space for string to be copied*/
 		
-		if (!new_environ[index])	//If no more space to allocate
+		if (!new_environ[index])	
+			/
+			/*If no more space to allocate*/
 		{
 			for (index--; index >= 0; index--)
 			{
-				//THen rocover space and return NULL
+				/*THen rocover space and return NULL*/
 				free(new_environ[index]);
 			}
 			free(new_environ);
 			return (NULL);
 		}
-		_strcpy(environ[index], new_environ[index]);	//Makes full copies of each index
+		_strcpy(environ[index], new_environ[index]);	
+		/*Makes full copies of each index*/
 	}
 
-	new_environ[index] = NULL:	//Ensures it is NULL terminated
+	new_environ[index] = NULL;	
+	/*Ensures it is NULL terminated*/
 	
-	return (new_environ);		//Return pointer to new_environ
+	return (new_environ);		/*Return pointer to new_environ*/
 }
