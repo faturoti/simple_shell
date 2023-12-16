@@ -1,15 +1,11 @@
 #include "main.h"
-
 int cant_open(char *file_path);
-int proc_file_commands(char *file_path, int *exe_ret);
-
 /**
  * cant_open - If the file doesn't exist or lacks proper permissions
  * @file_path: Path to the supposed file.
  *
  * Return - 127
  */
-
 int cant_open(char *file_path)
 {
 	char *error, *hist_str;		
@@ -21,12 +17,11 @@ int cant_open(char *file_path)
 	
 	if (!hist_str)
 	{
-		return(127);
+		return (127);
 	}
-	
+
 	len = _str_len(name) + _strlen(hist_str) + _strlen(file_path) + 16;
 	error = malloc(sizeof(char) * (len + 1));
-
 	if (!error)
 	{
 		free(hist_str);
@@ -53,8 +48,8 @@ int cant_open(char *file_path)
  * @exe_ret: Return value of the last executed comman
  *
  * Return: the last return value of last command.
- *		127 for file couldn't open
- *		if malloc ails -1
+ * 		-127 for file couldn't open
+ * 		if malloc ails -1
  */
 
 int proc_file_commands(char *file_path, int *exe_ret)
@@ -77,7 +72,6 @@ int proc_file_commands(char *file_path, int *exe_ret)
 	}
 
 	/*Line automatically has size of 120*/
-
 	line = malloc(sizeof(char) * old_size);
 
 	if (!line)
@@ -87,26 +81,26 @@ int proc_file_commands(char *file_path, int *exe_ret)
 
 	do
 	{
-		b_read = read(file, buffer, 119);	//reads from file to buffer
+		b_read = read(file, buffer, 119);	
+		/*reads from file to buffer*/
 		if (b_read == 0 && linesize == 0)
 			return (*exe_ret);
 
 		buffer[b_read] = '\0';	
 		/*Null terminate the buffer*/
-
 		line_size += b_read;
 		line = _realloc(line, old_size, line_size);
 		_strcat(line, buffer);
-
-		old_size = line_size;
-
+		old_size = line_size;		
 	}
 	while (b_read)
-	{}
+	{
 
+	}
 	for (i = 0; line[i] == '\n'; i++)
+	{
 		line[i] = ' ';
-
+	}
 	for (; i < line_size; i++)
 	{
 		if (line[i] == '\n')
@@ -117,16 +111,12 @@ int proc_file_commands(char *file_path, int *exe_ret)
 				line[i] = ' ';
 			}
 		}
-
 	}
-
 	variable_replacement(&line, exe_ret);
-	handle_line(&line, line_size);
 	handle_line(&line, line_size);
 
 	args = _strtok(line, " ");
 	free(line);
-
 	if (!args)
 	{
 		return (0);
@@ -138,9 +128,7 @@ int proc_file_commands(char *file_path, int *exe_ret)
 		free_args(args, args);
 		return (*exe_ret);
 	}
-
 	front = args;
-
 	for (i = 0; args[i]; i++)
 	{
 		if (_strncmp(args[i], ";", 1) == 0)
@@ -152,10 +140,8 @@ int proc_file_commands(char *file_path, int *exe_ret)
 			i = 0;
 		}
 	}
-
 	ret = call_args(args, front, exe_ret);
-	
-	free(front);
 
+	free(front);
 	return (ret);
 }
